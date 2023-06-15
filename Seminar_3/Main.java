@@ -1,6 +1,9 @@
 package Seminar_3;
 
 import java.util.Date;
+import java.io.File;
+import java.io.FileWriter;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -16,9 +19,9 @@ public class Main {
             String[] user_data;
             user_data = getUserData(raw_data);
 
-            System.out.println(Arrays.toString(user_data));
-
             checkUserData(user_data);
+
+            saveData(user_data);
 
         } catch (RuntimeException exc) {
             System.out.println(exc.getMessage());
@@ -67,6 +70,19 @@ public class Main {
         // проверка gender
         if (!(in_data[5].equals("f") | in_data[5].equals("m"))) {
             throw new RuntimeException("Invalid gender value!");
+        }
+    }
+
+    // запись данных пользователя в файл
+    public static void saveData(String[] in_data) {
+        File user_file = new File(in_data[0]);
+
+        try (FileWriter writer = new FileWriter(user_file, true)) {
+
+            writer.write(String.join(" ", in_data) + "\n");
+
+        } catch (Exception exc) {
+            throw new RuntimeException("File write error, stacktrace: " + exc.getMessage());
         }
     }
 }
