@@ -5,22 +5,28 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Scanner iScanner = new Scanner(System.in, "cp866");
         
         try {
-            System.out.println(Arrays.toString(getUserData()));
+            System.out.print("Enter data separated by spaces: ");
+            String raw_data = iScanner.nextLine();
+            
+            String[] user_data;
+            user_data = getUserData(raw_data);
+
+            System.out.println(Arrays.toString(user_data));
         } catch (RuntimeException exc) {
             System.out.println(exc.getMessage());
+        }
+        finally {
+            iScanner.close();
         }
     }
 
     // ввод исходных данных
-    public static String[] getUserData() {
-        Scanner iScanner = new Scanner(System.in, "cp866");
-        System.out.print("Enter data separated by spaces: ");
-        String raw_data = iScanner.nextLine();
-
+    public static String[] getUserData(String in_data) {
         String[] split_data;
-        split_data = raw_data.split(" ");
+        split_data = in_data.split(" ");
 
         if (split_data.length != 6){
             throw new RuntimeException("Insufficient amount of data!");
